@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Poker Revolution - Hackathon 2025</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --quantum-blue: #00f5ff;
+      --quantum-purple: #8a2be2;
+      --quantum-gold: #ffd700;
+      --quantum-red: #ff073a;
+      --quantum-green: #39ff14;
+      --dark-bg: #0a0a0f;
+      --card-bg: rgba(15, 15, 25, 0.95);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: 
+        radial-gradient(circle at 20% 80%, var(--quantum-purple) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--quantum-blue) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, var(--quantum-red) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Quantum Grid Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    /* Floating Quantum Particles */
+    .quantum-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .quantum-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--quantum-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--quantum-blue);
+      animation: quantumFloat 8s ease-in-out infinite;
+    }
+
+    .quantum-particle:nth-child(2) { background: var(--quantum-purple); box-shadow: 0 0 20px var(--quantum-purple); }
+    .quantum-particle:nth-child(3) { background: var(--quantum-gold); box-shadow: 0 0 20px var(--quantum-gold); }
+    .quantum-particle:nth-child(4) { background: var(--quantum-green); box-shadow: 0 0 20px var(--quantum-green); }
+
+    @keyframes quantumFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      25% { transform: translateY(-30px) rotate(90deg); opacity: 1; }
+      50% { transform: translateY(-60px) rotate(180deg); opacity: 0.8; }
+      75% { transform: translateY(-30px) rotate(270deg); opacity: 1; }
+    }
+
+    /* Main Container */
+    .main-container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Section */
+    .header {
+      padding: 20px 0;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 245, 255, 0.3);
+    }
+
+    .logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5em;
+      font-weight: 900;
+      background: linear-gradient(45deg, var(--quantum-blue), var(--quantum-purple), var(--quantum-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+      margin-bottom: 10px;
+      animation: logoGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.7)); }
+      100% { filter: drop-shadow(0 0 40px rgba(138, 43, 226, 0.7)); }
+    }
+
+    .tagline {
+      font-size: 1.1em;
+      color: var(--quantum-gold);
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 40px;
+      padding: 40px;
+      max-width: 1600px;
+      margin: 0 auto;
+      flex-grow: 1;
+    }
+
+    /* Demo Panel */
+    .demo-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .demo-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--quantum-blue), var(--quantum-purple), var(--quantum-gold), var(--quantum-green));
+      animation: borderFlow 3s linear infinite;
+    }
+
+    @keyframes borderFlow {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .panel-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.3em;
+      color: var(--quantum-blue);
+      margin-bottom: 25px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .demo-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+      display: block;
+    }
+
+    .demo-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.1), transparent);
+      transition: left 0.7s ease;
+    }
+
+    .demo-card:hover::before {
+      left: 100%;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      border-color: var(--quantum-blue);
+      box-shadow: 0 15px 30px rgba(0, 245, 255, 0.3);
+    }
+
+    .demo-icon {
+      font-size: 2em;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .demo-title {
+      font-weight: 700;
+      font-size: 1.1em;
+      color: var(--quantum-gold);
+      margin-bottom: 8px;
+    }
+
+    .demo-desc {
+      font-size: 0.9em;
+      opacity: 0.8;
+      line-height: 1.4;
+    }
+
+    /* Main Content */
+    .main-content {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      border-radius: 20px;
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 3.5em;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--quantum-blue), var(--quantum-purple), var(--quantum-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      animation: titlePulse 4s ease-in-out infinite;
+    }
+
+    @keyframes titlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .hero-subtitle {
+      font-size: 1.3em;
+      color: var(--quantum-blue);
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+      margin: 50px 0;
+    }
+
+    .stat-card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(0, 245, 255, 0.1) 50%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .stat-card:hover::after {
+      opacity: 1;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--quantum-blue);
+      box-shadow: 0 20px 40px rgba(0, 245, 255, 0.2);
+    }
+
+    .stat-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5em;
+      font-weight: 900;
+      color: var(--quantum-gold);
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .feature-section {
+      margin: 60px 0;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.2em;
+      color: var(--quantum-purple);
+      text-align: center;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .comparison-table {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 245, 255, 0.3);
+    }
+
+    .table-header {
+      background: linear-gradient(135deg, var(--quantum-blue), var(--quantum-purple));
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 2fr;
+      gap: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .table-row {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 2fr;
+      gap: 20px;
+      border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    .table-row:hover {
+      background: rgba(0, 245, 255, 0.05);
+    }
+
+    .quantum-tech {
+      color: var(--quantum-green);
+      font-weight: 600;
+    }
+
+    .classical-tech {
+      color: var(--quantum-red);
+      font-weight: 600;
+    }
+
+    .advantage {
+      color: var(--quantum-gold);
+      font-weight: 600;
+    }
+
+    /* Hackathon CTA */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 69, 0, 0.1), rgba(138, 43, 226, 0.1));
+      border: 3px solid var(--quantum-gold);
+      border-radius: 25px;
+      padding: 50px;
+      text-align: center;
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, var(--quantum-gold), transparent, var(--quantum-red), transparent);
+      animation: rotate 6s linear infinite;
+      opacity: 0.15;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .cta-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.2em;
+      color: var(--quantum-blue);
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(0, 245, 255, 0.6);
+      animation: innovationGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes innovationGlow {
+      0% { text-shadow: 0 0 20px rgba(0, 245, 255, 0.6), 0 0 40px rgba(0, 245, 255, 0.3); }
+      100% { text-shadow: 0 0 30px rgba(0, 245, 255, 0.8), 0 0 60px rgba(0, 245, 255, 0.4); }
+    }
+
+    .innovation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 40px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .innovation-card {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(0, 245, 255, 0.5);
+      border-radius: 20px;
+      padding: 30px 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .innovation-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .innovation-card:hover::before {
+      left: 100%;
+    }
+
+    .innovation-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      border-color: var(--quantum-gold);
+      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+    }
+
+    .innovation-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+    }
+
+    .innovation-card h4 {
+      font-family: 'Orbitron', monospace;
+      color: var(--quantum-blue);
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .innovation-card p {
+      font-size: 0.95em;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    .winning-statement {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid var(--quantum-purple);
+      border-radius: 20px;
+      padding: 40px;
+      margin: 50px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .statement-text {
+      font-size: 1.3em;
+      line-height: 1.6;
+      font-style: italic;
+      color: #fff;
+    }
+
+    .highlight {
+      color: var(--quantum-gold);
+      font-weight: 900;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    }
+
+    .submission-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(138, 43, 226, 0.15));
+      color: white;
+      padding: 30px;
+      border-radius: 25px;
+      margin-top: 40px;
+      position: relative;
+      z-index: 1;
+      border: 2px solid var(--quantum-blue);
+      animation: submissionPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes submissionPulse {
+      0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 0 30px rgba(0, 245, 255, 0.4); 
+      }
+      50% { 
+        transform: scale(1.01); 
+        box-shadow: 0 0 50px rgba(0, 245, 255, 0.6); 
+      }
+    }
+
+    .submission-icon {
+      font-size: 3.5em;
+      animation: submissionFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes submissionFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(5deg); }
+    }
+
+    .submission-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8em;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--quantum-blue);
+    }
+
+    .submission-subtitle {
+      font-size: 1.1em;
+      font-weight: 400;
+      margin-top: 5px;
+      color: var(--quantum-gold);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 20px;
+      }
+      
+      .hero-title {
+        font-size: 2.5em;
+      }
+      
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .table-header,
+      .table-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      
+      .innovation-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .cta-title {
+        font-size: 1.8em;
+      }
+      
+      .submission-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .submission-title {
+        font-size: 1.5em;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 2em;
+      }
+      
+      .hero-title {
+        font-size: 2em;
+      }
+      
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .main-content,
+      .demo-panel {
+        padding: 30px 20px;
+      }
+      
+      .innovation-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-title {
+        font-size: 1.8em;
+      }
+      
+      .submission-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .submission-title {
+        font-size: 1.5em;
+      }
+      
+      .winning-statement {
+        padding: 30px 20px;
+      }
+      
+      .statement-text {
+        font-size: 1.1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Quantum Particles -->
+  <div class="quantum-particles">
+    <div class="quantum-particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="quantum-particle" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
+    <div class="quantum-particle" style="top: 80%; left: 30%; animation-delay: 4s;"></div>
+    <div class="quantum-particle" style="top: 40%; left: 70%; animation-delay: 6s;"></div>
+    <div class="quantum-particle" style="top: 10%; left: 90%; animation-delay: 1s;"></div>
+    <div class="quantum-particle" style="top: 70%; left: 15%; animation-delay: 3s;"></div>
+  </div>
+
+  <div class="main-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">QUANTUM POKER</div>
+      <div class="tagline">HACKATHON 2025 • REVOLUTIONARY GAMING PLATFORM</div>
+    </header>
+
+    <!-- Content Grid -->
+    <div class="content-grid">
+      <!-- Demo Panel -->
+      <div class="demo-panel">
+        <h3 class="panel-title">Live Quantum Demos</h3>
+        
+        <a href="{{ url_for('card') }}" class="demo-card">
+          <span class="demo-icon">🃏</span>
+          <div class="demo-title">Quantum Card Draw</div>
+          <div class="demo-desc">True quantum randomness using superposition states</div>
+        </a>
+        
+        <a href="{{ url_for('coin') }}" class="demo-card">
+          <span class="demo-icon">🪙</span>
+          <div class="demo-title">Quantum Coin Flip</div>
+          <div class="demo-desc">Harness quantum entanglement for fair outcomes</div>
+        </a>
+        
+        <a href="{{ url_for('fraud') }}" class="demo-card">
+          <span class="demo-icon">🧠</span>
+          <div class="demo-title">Quantum ML Detection</div>
+          <div class="demo-desc">Advanced anomaly detection with quantum algorithms</div>
+        </a>
+        
+        <a href="{{ url_for('pqc') }}" class="demo-card">
+          <span class="demo-icon">🔐</span>
+          <div class="demo-title">Post-Quantum Security</div>
+          <div class="demo-desc">Quantum-resistant cryptography for future safety</div>
+        </a>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="hero-section">
+          <h1 class="hero-title">THE FUTURE OF GAMING</h1>
+          <p class="hero-subtitle">Powered by Quantum Computing Revolution</p>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Quantum Algorithms</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">True Randomness</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Quantum-Safe</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">2025</div>
+            <div class="stat-label">Future-Ready</div>
+          </div>
+        </div>
+
+        <div class="feature-section">
+          <h2 class="section-title">Quantum Advantage Matrix</h2>
+          <div class="comparison-table">
+            <div class="table-header">
+              <div>Feature</div>
+              <div>Quantum Algorithm</div>
+              <div>Classical Algorithm</div>
+              <div>Quantum Advantage</div>
+            </div>
+            <div class="table-row">
+              <div><strong>Random Generation</strong></div>
+              <div class="quantum-tech">QRNG + Grover's</div>
+              <div class="classical-tech">PRNG</div>
+              <div class="advantage">Truly unpredictable, exponentially faster</div>
+            </div>
+            <div class="table-row">
+              <div><strong>Fraud Detection</strong></div>
+              <div class="quantum-tech">Quantum ML</div>
+              <div class="classical-tech">Classical ML</div>
+              <div class="advantage">Complex pattern recognition, quantum speedup</div>
+            </div>
+            <div class="table-row">
+              <div><strong>Cryptography</strong></div>
+              <div class="quantum-tech">PQC (Kyber)</div>
+              <div class="classical-tech">RSA/ECC</div>
+              <div class="advantage">Quantum-resistant, future-proof security</div>
+            </div>
+            <div class="table-row">
+              <div><strong>Game Logic</strong></div>
+              <div class="quantum-tech">Superposition</div>
+              <div class="classical-tech">Binary Logic</div>
+              <div class="advantage">Provable fairness, novel mechanics</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-section">
+          <h3 class="cta-title">REVOLUTIONARY HACKATHON SUBMISSION</h3>
+          <div class="innovation-grid">
+            <div class="innovation-card">
+              <div class="innovation-icon">💡</div>
+              <h4>BREAKTHROUGH INNOVATION</h4>
+              <p>First quantum-powered gaming platform combining 4 cutting-edge technologies</p>
+            </div>
+            <div class="innovation-card">
+              <div class="innovation-icon">🎯</div>
+              <h4>REAL-WORLD IMPACT</h4>
+              <p>Addresses $150B gaming industry challenges with quantum solutions</p>
+            </div>
+            <div class="innovation-card">
+              <div class="innovation-icon">🔬</div>
+              <h4>TECHNICAL EXCELLENCE</h4>
+              <p>Production-ready Qiskit implementation with live quantum circuits</p>
+            </div>
+          </div>
+          <div class="winning-statement">
+            <div class="statement-text">
+              Our platform demonstrates the <strong>FUTURE OF GAMING</strong> by solving critical industry challenges: 
+              <span class="highlight">TRUE RANDOMNESS</span>, 
+              <span class="highlight">QUANTUM-SAFE SECURITY</span>, and 
+              <span class="highlight">INTELLIGENT FRAUD DETECTION</span> - 
+              all unified in one innovative quantum computing application.
+            </div>
+          </div>
+          <div class="submission-section">
+            <div class="submission-icon">🎮</div>
+            <div class="submission-text">
+              <div class="submission-title">QUANTUM POKER REVOLUTION</div>
+              <div class="submission-subtitle">Next-Generation Gaming Platform - Hackathon 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dynamic quantum particle creation
+    function createQuantumParticles() {
+      const container = document.querySelector('.quantum-particles');
+      const colors = ['#00f5ff', '#8a2be2', '#ffd700', '#39ff14'];
+      
+      for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'quantum-particle';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.boxShadow = `0 0 20px ${particle.style.background}`;
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        container.appendChild(particle);
+      }
+    }
+
+    // Enhanced entrance animations
+    function initAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0) scale(1)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.stat-card, .demo-card, .table-row').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px) scale(0.9)';
+        el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.observe(el);
+      });
+    }
+
+    // Click effects for demo cards
+    function addClickEffects() {
+      document.querySelectorAll('.demo-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          const ripple = document.createElement('div');
+          ripple.style.position = 'absolute';
+          ripple.style.borderRadius = '50%';
+          ripple.style.background = 'rgba(0, 245, 255, 0.6)';
+          ripple.style.transform = 'scale(0)';
+          ripple.style.animation = 'ripple 0.6s linear';
+          ripple.style.left = (e.clientX - card.offsetLeft - 25) + 'px';
+          ripple.style.top = (e.clientY - card.offsetTop - 25) + 'px';
+          ripple.style.width = ripple.style.height = '50px';
+          
+          card.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+    }
+
+    // Add ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      createQuantumParticles();
+      initAnimations();
+      addClickEffects();
+    });
+
+    // Add parallax effect to background
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallax = document.querySelector('body::before');
+      if (parallax) {
+        parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum ML Fraud Detection - Quantum Poker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --quantum-blue: #00f5ff;
+      --quantum-purple: #8a2be2;
+      --quantum-gold: #ffd700;
+      --quantum-red: #ff073a;
+      --quantum-green: #39ff14;
+      --danger-red: #dc3545;
+      --warning-orange: #fd7e14;
+      --success-green: #28a745;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: 
+        radial-gradient(circle at 25% 75%, var(--quantum-red) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, var(--quantum-blue) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      color: white;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    /* Quantum Grid Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 7, 58, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 7, 58, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 15s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(40px, 40px); }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(15, 15, 25, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 7, 58, 0.3);
+      border-radius: 25px;
+      padding: 50px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 2;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: 3em;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--quantum-red), var(--quantum-blue), var(--quantum-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(255, 7, 58, 0.6)); }
+      100% { filter: drop-shadow(0 0 40px rgba(0, 245, 255, 0.6)); }
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: var(--quantum-blue);
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .description {
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+      margin: 50px 0;
+    }
+
+    .stat-card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 7, 58, 0.3);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--quantum-red), var(--quantum-blue), var(--quantum-purple));
+      animation: borderFlow 3s linear infinite;
+    }
+
+    @keyframes borderFlow {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--quantum-red);
+      box-shadow: 0 15px 30px rgba(255, 7, 58, 0.3);
+    }
+
+    .stat-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5em;
+      font-weight: 900;
+      color: var(--quantum-red);
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.9;
+    }
+
+    .results-section {
+      margin-top: 40px;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2em;
+      color: var(--quantum-purple);
+      text-align: center;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .table-container {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 7, 58, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--quantum-red), var(--quantum-purple));
+      color: white;
+      padding: 20px 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9em;
+    }
+
+    td {
+      padding: 18px 15px;
+      border-bottom: 1px solid rgba(255, 7, 58, 0.1);
+      text-align: center;
+    }
+
+    tr {
+      transition: all 0.3s ease;
+    }
+
+    tr:hover {
+      background: rgba(255, 7, 58, 0.05);
+    }
+
+    .anomaly {
+      background: rgba(255, 7, 58, 0.15) !important;
+      border-left: 4px solid var(--danger-red);
+      animation: anomalyPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes anomalyPulse {
+      0%, 100% { background: rgba(255, 7, 58, 0.15); }
+      50% { background: rgba(255, 7, 58, 0.25); }
+    }
+
+    .normal {
+      background: rgba(40, 167, 69, 0.1);
+      border-left: 4px solid var(--success-green);
+    }
+
+    .score-cell {
+      font-family: 'Orbitron', monospace;
+      font-weight: 600;
+    }
+
+    .status-flagged {
+      color: var(--danger-red);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .status-normal {
+      color: var(--success-green);
+      font-weight: 600;
+    }
+
+    .quantum-info {
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      border-left: 4px solid var(--quantum-blue);
+      border: 1px solid rgba(0, 245, 255, 0.3);
+    }
+
+    .quantum-info h3 {
+      font-family: 'Orbitron', monospace;
+      color: var(--quantum-blue);
+      margin-bottom: 15px;
+      font-size: 1.3em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .quantum-info p {
+      opacity: 0.9;
+      line-height: 1.7;
+      font-size: 1em;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 50px;
+    }
+
+    .button {
+      padding: 18px 35px;
+      border: none;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1em;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--quantum-red), var(--quantum-purple));
+      color: white;
+      box-shadow: 0 10px 30px rgba(255, 7, 58, 0.4);
+      border: 2px solid rgba(255, 7, 58, 0.6);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .button:hover {
+      transform: translateY(-4px);
+    }
+
+    .button-primary:hover {
+      box-shadow: 0 15px 40px rgba(255, 7, 58, 0.6);
+      background: linear-gradient(135deg, var(--quantum-purple), var(--quantum-blue));
+    }
+
+    .button-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: var(--quantum-red);
+    }
+
+    .button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .button:hover::before {
+      left: 100%;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px;
+        padding: 30px 20px;
+      }
+      
+      h1 {
+        font-size: 2.2em;
+      }
+      
+      .stats-section {
+        grid-template-columns: 1fr;
+      }
+      
+      th, td {
+        padding: 12px 8px;
+        font-size: 0.9em;
+      }
+      
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .button {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🧠 Quantum ML Fraud Detection</h1>
+      <p class="subtitle">Advanced Anomaly Detection with Quantum Machine Learning</p>
+      <p class="description">
+        Our quantum-enhanced machine learning algorithm analyzes user behavior patterns using quantum kernel methods 
+        to detect fraudulent activities with unprecedented accuracy and speed.
+      </p>
+    </div>
+
+    <div class="stats-section">
+      <div class="stat-card">
+        <div class="stat-number">{{ results.scores|length if results.scores else 0 }}</div>
+        <div class="stat-label">Users Analyzed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ results.anomalies|length if results.anomalies else 0 }}</div>
+        <div class="stat-label">Anomalies Detected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ "%.1f"|format((results.anomalies|length / results.scores|length * 100) if results.scores else 0) }}%</div>
+        <div class="stat-label">Fraud Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Q-ML</div>
+        <div class="stat-label">Algorithm Type</div>
+      </div>
+    </div>
+
+    <div class="quantum-info">
+      <h3>⚛️ Quantum Machine Learning Advantage</h3>
+      <p>
+        This system uses quantum kernel methods to map user behavior into high-dimensional Hilbert spaces, 
+        enabling detection of complex fraud patterns that classical algorithms miss. The quantum advantage 
+        provides exponential speedup for certain pattern recognition tasks.
+      </p>
+    </div>
+
+    <div class="results-section">
+      <h2 class="section-title">🔍 Anomaly Detection Results</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>User Index</th>
+              <th>Quantum Score</th>
+              <th>Risk Level</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for score in results.scores %}
+            <tr class="{{ 'anomaly' if loop.index0 in results.anomalies else 'normal' }}">
+              <td><strong>User {{ loop.index0 }}</strong></td>
+              <td class="score-cell">{{ "%.6f"|format(score) }}</td>
+              <td>
+                {% if loop.index0 in results.anomalies %}
+                  <span style="color: var(--danger-red);">🔴 HIGH RISK</span>
+                {% else %}
+                  <span style="color: var(--success-green);">🟢 LOW RISK</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if loop.index0 in results.anomalies %}
+                  <span class="status-flagged">🚩 FLAGGED</span>
+                {% else %}
+                  <span class="status-normal">✅ NORMAL</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <a href="{{ url_for('fraud') }}" class="button button-primary">
+        🔄 Re-run Analysis
+      </a>
+      <a href="{{ url_for('index') }}" class="button button-secondary">
+        🏠 Back to Home
+      </a>
+    </div>
+  </div>
+</body>
+</html>
