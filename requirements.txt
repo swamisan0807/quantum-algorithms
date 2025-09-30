@@ -1,0 +1,7 @@
+flask
+qiskit
+scikit-learn
+numpy
+matplotlib
+oqs            # only if you want the PQC handshake demo
+liboqs-python
