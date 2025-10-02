@@ -99,8 +99,11 @@ def internal_error(error):
     """Custom 500 error page"""
     return render_template('index.html'), 500
 
+import os
+
 if __name__ == "__main__":
-    # Enable debug mode for development
-    # For production, set debug=False and consider using HTTPS
-    # app.run(ssl_context=('cert.pem', 'key.pem'), debug=False)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Render sets the PORT environment variable dynamically
+    port = int(os.environ.get("PORT", 5000))  # default to 5000 locally
+    app.run(host='0.0.0.0', port=port)
+
+
