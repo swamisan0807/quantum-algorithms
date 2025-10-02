@@ -560,7 +560,14 @@ GET http://localhost:5000/pqc
 
 ## The Winning Formula
 
-> **"demonstrate the FUTURE OF GAMING by solving critical challenges: TRUE RANDOMNESS through quantum superposition and QUANTUM-SAFE SECURITY through lattice cryptography—unified in one production-ready platform."**
+> **"We demonstrate the FUTURE OF GAMING by solving critical challenges: TRUE RANDOMNESS through quantum superposition and QUANTUM-SAFE SECURITY through lattice cryptography—unified in one production-ready platform."**
+
+**Live Demo:** http://10.76.11.208:5000/
+
+**Documentation:** README.md | JUDGE_EVALUATION_GUIDE.md | TECHNICAL.md
+
+**Code Repository:** Available upon request
+
 ---
 
 **Quantum Poker Revolution | Hackathon 2025**
