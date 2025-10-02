@@ -493,8 +493,9 @@ results = run_quantum_anomaly_detection()
 
 > "We demonstrate the FUTURE OF GAMING by solving critical challenges: TRUE RANDOMNESS, QUANTUM-SAFE SECURITY, and INTELLIGENT FRAUD DETECTION—unified in one quantum application."
 
-**Live Demo:** http://10.76.11.208:5000/
+
 
 ---
 
-**Quantum Poker Revolution | Hackathon 2025**
+
+
