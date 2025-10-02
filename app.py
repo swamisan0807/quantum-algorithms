@@ -100,7 +100,6 @@ def internal_error(error):
     return render_template('index.html'), 500
 
 if __name__ == "__main__":
-    # Enable debug mode for development
-    # For production, set debug=False and consider using HTTPS
-    # app.run(ssl_context=('cert.pem', 'key.pem'), debug=False)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
