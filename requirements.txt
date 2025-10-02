@@ -6,7 +6,8 @@ matplotlib
 oqs            # only if you want the PQC handshake demo
 gunicorn==21.2.0
 qiskit_aer
-gunicorn app:app
+
+
 
 
 
