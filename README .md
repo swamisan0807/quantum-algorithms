@@ -25,7 +25,7 @@ A production-ready Flask application solving online gaming's trust crisis using 
 
 ## Demo
 
-**Live Platform:** http://10.76.11.208:5000/
+**Live Platform:** http://ec2-98-85-115-137.compute-1.amazonaws.com:5000/
 
 ```
 User: Clicks "Draw Card"
@@ -611,4 +611,5 @@ GET /fraud
 **Quantum Poker Revolution | Hackathon 2025**
 
 *Building the quantum-safe gaming infrastructure of tomorrow, today.*
+
 
