@@ -608,17 +608,7 @@ GET /fraud
 > **"We demonstrate the FUTURE OF GAMING by solving three critical challenges: TRUE RANDOMNESS through quantum superposition, QUANTUM-SAFE SECURITY through lattice cryptography, and INTELLIGENT FRAUD DETECTION through quantum machine learning—unified in one production-ready platform."**
 
 ---
-
-**Live Demo:** http://10.76.11.208:5000/
-
-**Documentation:** README.md | JUDGE_EVALUATION_GUIDE.md | PRESENTATION.md
-
-**Source Code:** Available upon request
-
-**Team Contact:** [Your contact information]
-
----
-
 **Quantum Poker Revolution | Hackathon 2025**
 
 *Building the quantum-safe gaming infrastructure of tomorrow, today.*
+
