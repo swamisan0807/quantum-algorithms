@@ -14,7 +14,7 @@ A production-ready Flask application solving online gaming's trust crisis using 
 
 **Problem:** $150B gaming industry faces three critical challenges:
 1. **Predictable Randomness:** Pseudo-random algorithms can be exploited with sufficient analysis
-2. **Security Vulnerability:** Classical encryption vulnerable when quantum computers mature (2030-2035)
+2. **Security Vulnerability:** Classical encryption vulnerable when quantum computers mature (2025-2030)
 3. **Fraud Losses:** Traditional ML misses sophisticated patterns, costing billions annually
 
 **Solution:** Quantum Poker leverages quantum mechanics for fundamentally unpredictable randomness, lattice-based cryptography for quantum-resistant security, and quantum kernels for detecting fraud patterns invisible to classical algorithms.
@@ -613,3 +613,4 @@ GET /fraud
 **Quantum Poker Revolution | Hackathon 2025**
 
 *Building the quantum-safe gaming infrastructure of tomorrow, today.*
+
