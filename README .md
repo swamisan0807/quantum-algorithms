@@ -383,7 +383,7 @@ pip install kyber-py
 python app.py
 
 # 5. Open browser
-http://localhost:5000
+ http://ec2-98-85-115-137.compute-1.amazonaws.com:5000/
 ```
 
 ### Project Structure
@@ -611,5 +611,6 @@ GET /fraud
 **Quantum Poker Revolution | Hackathon 2025**
 
 *Building the quantum-safe gaming infrastructure of tomorrow, today.*
+
 
 
