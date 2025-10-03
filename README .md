@@ -181,7 +181,7 @@ def run_pqc_demo():
 
 **Security Analysis:**
 
-| Cryptosystem | Classical Attacks | Quantum Attacks | Status 2035 |
+| Cryptosystem | Classical Attacks | Quantum Attacks | Status 2030 |
 |--------------|------------------|-----------------|-------------|
 | RSA-2048 | ✓ Secure | ✗ Vulnerable (Shor's) | Obsolete |
 | ECC-256 | ✓ Secure | ✗ Vulnerable (Shor's) | Obsolete |
@@ -611,6 +611,7 @@ GET /fraud
 **Quantum Poker Revolution | Hackathon 2025**
 
 *Building the quantum-safe gaming infrastructure of tomorrow, today.*
+
 
 
 
